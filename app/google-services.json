@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "710684563734",
+    "firebase_url": "https://acceleration-deceleration-app-default-rtdb.firebaseio.com",
+    "project_id": "acceleration-deceleration-app",
+    "storage_bucket": "acceleration-deceleration-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710684563734:android:4edf003b40ef3ffde29837",
+        "android_client_info": {
+          "package_name": "com.examples.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710684563734-lmmh1tco1919mju7brugadqserth0pr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu-hvWl2xtteIu7LxxLuRwp3BYA1irOIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710684563734-lmmh1tco1919mju7brugadqserth0pr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710684563734:android:46349e94f0d483ece29837",
+        "android_client_info": {
+          "package_name": "com.examples.speedometer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710684563734-lmmh1tco1919mju7brugadqserth0pr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu-hvWl2xtteIu7LxxLuRwp3BYA1irOIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710684563734-lmmh1tco1919mju7brugadqserth0pr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
