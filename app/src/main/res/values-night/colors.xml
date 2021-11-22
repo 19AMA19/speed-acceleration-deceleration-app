@@ -2,6 +2,9 @@
 <resources>
     <color name="background">#20252C</color>
     <color name="statusbar">#20252C</color>
-    <color name="text">#FFFFFF</color>
+    <color name="text">#CFD0D1</color>
+    <color name="button_text">#272C35</color>
+    <color name="button">#FFFFFF</color>
+    <color name="black">#000000</color>
 
 </resources>

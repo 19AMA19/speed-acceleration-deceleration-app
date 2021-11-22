@@ -53,6 +53,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
-// notes
-// acceleration dx/dt

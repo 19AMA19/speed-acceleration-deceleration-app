@@ -5,4 +5,7 @@
     <string name="_0">0</string>
     <string name="khm">- Khm</string>
     <string name="location">location</string>
+    <string name="acceleration">acceleration</string>
+    <string name="show_map">Show map</string>
+    <string name="speedometer">SpeedoMeter</string>
 </resources>
