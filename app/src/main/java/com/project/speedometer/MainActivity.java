@@ -36,23 +36,26 @@ public class MainActivity extends AppCompatActivity {
         Button map_btn = findViewById(R.id.map_btn);
         map_btn.setOnClickListener(v ->{
             Intent intent = new Intent(this,MapsActivity.class);
+            // Start map activity
             startActivity(intent);
         });
 
 
     }
 
-    // Method, run after when permission granted
+    // Method, run after permission granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQ_LOC_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            // When permissions granted call open menu to start menu activity
             open_menu();
         }
     }
 
     public void open_menu(){
         Intent intent = new Intent(this,Menu.class);
+        // Start Menu activity
         startActivity(intent);
     }
 }

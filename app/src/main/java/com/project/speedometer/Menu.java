@@ -106,7 +106,7 @@ public class Menu extends AppCompatActivity implements LocationListener {
                 last_speed.clear(); // clear list
 
                 if (acceleration >= acceleration_limit || acceleration <= -acceleration_limit){ // check if acceleration is more than limit
-                    accel_txt.setText("acceleraton: " +  String.format("%.2f", acceleration) + "Khm/h*s");
+                    accel_txt.setText("acceleraton: " +  String.format("%.2f", acceleration) + "Km/h*s");
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()); // Take Date now
                     String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()); // Take Time now
 
