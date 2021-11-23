@@ -1,5 +1,7 @@
 package com.examples.speedometer;
 
+import static java.lang.Math.round;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -24,32 +26,35 @@ import com.github.anastr.speedviewlib.SpeedView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Locale;
+import java.util.UUID;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function3;
 
 public class Menu extends AppCompatActivity implements LocationListener {
-    LocationManager locationManager;
     FirebaseDatabase database;
-    DatabaseReference referenceMeter;
-    DatabaseReference referenceId;
+    DatabaseReference reference;
+    LocationManager locationManager;
     TextView location_txt,accel_txt;
     ProgressiveGauge speedometer;
     boolean acceleration_flag = false;
-    int prev_speed,start_speed,end_speed,last_speed = 0;
+    int prev_speed,start_speed = 0;
     long start_time,finish_time;
+
+    List<Integer> last_speed = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
         setContentView(R.layout.activity_menu);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        database = FirebaseDatabase.getInstance();
-        referenceMeter = database.getReference("meter");
-        referenceId = database.getReference("id");
         startLocationUpdates();
         location_txt = findViewById(R.id.location_txt);
         accel_txt = findViewById(R.id.accel_txt);
@@ -84,34 +89,59 @@ public class Menu extends AppCompatActivity implements LocationListener {
     public void onLocationChanged(@NonNull Location location) {
         int speed = 0;
 
-        if (location.hasSpeed()) {
-            speed=(int) ((location.getSpeed()*3600)/1000);
+        if (location.hasSpeed()) { // if vehicle moving
+            speed=(int) ((location.getSpeed()*3600)/1000); // take and convert speed to khm/h
         }
+        double latitude = location.getLatitude(); // get latitude
+        double longitude = location.getLongitude(); // get longitude
+        location_txt.setText("Latitude:" + latitude  + "\nLongitude:" + longitude); // display using location_txt the longitude,latitude
+        speedometer.speedTo(speed); // display current speed using speedview
 
-        location_txt.setText("Latitude:" + location.getLatitude() + "\nLongitude:" + location.getLongitude());
-        speedometer.speedTo(speed);
+        int tmp_speed = (speed - prev_speed); // calculate speed difference between current state and previews
 
-        int tmp_speed = (speed - prev_speed);
-        if (tmp_speed == 0 && acceleration_flag) {
-            acceleration_flag = false;
-            finish_time = System.currentTimeMillis();
-            double d_time = (double) (finish_time - start_time) / 1000;
-            double acceleration = last_speed / d_time;
+        if (tmp_speed == 0 && acceleration_flag) { // if speed difference = 0 and flag = true then acceleration from something goes to 0
+            acceleration_flag = false; // change flag status
+            finish_time = System.currentTimeMillis(); // take finishing acceleration time
+            double d_time = (double) (finish_time - start_time) / 1000; // calculate duration and convert it from ms to sec
+            double acceleration = findAverage(last_speed) / d_time; // calculate acceleration using khm/h and sec
+            last_speed.clear(); // clear list
 
             if (acceleration >= 25 || acceleration <= -25){ // ± 50khm in 2 sec acceleration
                 accel_txt.setText("acceleraton: " +  String.format("%.2f", acceleration) + "Khm/h*s");
+                String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+                writeNewMeasure(acceleration,currentDate,currentTime,latitude,longitude,start_speed);
             }
 
-        } else if (tmp_speed !=0 && !acceleration_flag) {
-            start_time = System.currentTimeMillis();
-            acceleration_flag = true;
-            last_speed = tmp_speed;
+        } else if (tmp_speed !=0) { // if speed difference start not equal 0
+            if (!acceleration_flag){ // if is first time (flag = false)
+                start_speed = prev_speed; // save speed when acceleration starts
+                start_time = System.currentTimeMillis(); // save starting time
+            }
+            acceleration_flag = true; // change flag into true
+            last_speed.add(tmp_speed); // add this state with previews difference speed to list
         }
 
 
-        prev_speed = speed;
-        paint_meter(speed);
+        prev_speed = speed; // re-sign previews speed with current speed to have it in next state
+        paint_meter(speed); // color speedview
 
+    }
+
+    public void writeNewMeasure(double acceleration, String date, String time, double latitude, double longitude, int start_speed) {
+        Measures measures = new Measures(UUID.randomUUID().toString().replace("-", ""),acceleration,date,time,latitude,longitude,start_speed);
+        reference.child("measures").push().setValue(measures);
+    }
+
+    private static int findAverage(List<Integer> nums) {
+        // sum all the elements and divide by the amount of elements
+        int total = 0;
+
+        for(int i = 0; i<nums.size(); i++)
+            total += nums.get(i);
+
+        return round(total / nums.size());
     }
 
     private void paint_meter(int speed) {

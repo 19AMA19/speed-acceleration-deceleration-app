@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:sv_maxSpeed="200"
+        app:sv_maxSpeed="260"
         app:sv_speedTextColor="@color/text"
         app:sv_unitTextColor="@color/text" />
 

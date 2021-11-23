@@ -2,8 +2,6 @@
     <string name="app_name">speedoMeter</string>
     <string name="get_started">Get started</string>
     <string name="measuring">Measuring..</string>
-    <string name="_0">0</string>
-    <string name="khm">- Khm</string>
     <string name="location">location</string>
     <string name="acceleration">acceleration</string>
     <string name="show_map">Show map</string>
