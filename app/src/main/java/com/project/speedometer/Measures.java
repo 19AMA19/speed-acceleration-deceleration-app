@@ -1,4 +1,4 @@
-package com.examples.speedometer;
+package com.project.speedometer;
 
 public class Measures {
     public double acceleration;
@@ -17,6 +17,10 @@ public class Measures {
         this.latitude = latitude;
         this.longitude = longitude;
         this.start_speed = start_speed;
+    }
+
+    public Measures(){
+
     }
 
 }

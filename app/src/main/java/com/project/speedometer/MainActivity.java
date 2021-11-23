@@ -1,20 +1,13 @@
-package com.examples.speedometer;
+package com.project.speedometer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
 
@@ -26,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get started button clicked
         Button get_started_btn = findViewById(R.id.get_started_btn);
         get_started_btn.setOnClickListener(v -> {
             // Check if gps permission granted
@@ -37,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQ_LOC_CODE);
         });
+
+        // Map button clicked
+        Button map_btn = findViewById(R.id.map_btn);
+        map_btn.setOnClickListener(v ->{
+            Intent intent = new Intent(this,MapsActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 
     // Method, run after when permission granted

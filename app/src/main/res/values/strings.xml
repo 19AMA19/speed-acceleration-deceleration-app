@@ -6,4 +6,5 @@
     <string name="acceleration">acceleration</string>
     <string name="show_map">Show map</string>
     <string name="speedometer">SpeedoMeter</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
